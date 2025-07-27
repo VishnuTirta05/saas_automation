@@ -1,0 +1,44 @@
+services:
+  backend:
+    build: .
+    container_name: saas-backend
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - selenium
+    networks:
+      - webnet
+    command: python manage.py runserver 0.0.0.0:8000
+
+  frontend:
+    build: ./UI/saas-automation-ui
+    container_name: saas-frontend
+    volumes:
+      - ./UI/saas-automation-ui:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - webnet
+
+  selenium:
+    image: selenium/standalone-chrome:latest
+    container_name: saas-selenium
+    ports:
+      - "4444:4444"
+    networks:
+      - webnet
+
+networks:
+  webnet:
+
+
+
+
+
+
+
+
